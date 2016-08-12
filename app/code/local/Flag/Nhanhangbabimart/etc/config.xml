@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Flag_Nhanhangbabimart>
+            <version>0.1.0</version>
+        </Flag_Nhanhangbabimart>
+    </modules>
+    <global>
+        <models>
+            <flag_nhanhangbabimart>
+                <class>Flag_Nhanhangbabimart_Model</class>
+                <resourceModel>flag_nhanhangbabimart_resource</resourceModel>
+            </flag_nhanhangbabimart>
+            <flag_nhanhangbabimart_resource>
+                <class>Flag_Nhanhangbabimart_Model_Resource</class>
+            </flag_nhanhangbabimart_resource>
+        </models>
+        <blocks>
+            <flag_nhanhangbabimart>
+                <class>Flag_Nhanhangbabimart_Block</class>
+            </flag_nhanhangbabimart>
+        </blocks>
+        <helpers>
+            <flag_nhanhangbabimart>
+                <class>Flag_Nhanhangbabimart_Helper</class>
+            </flag_nhanhangbabimart>
+        </helpers>
+        <resources>
+            <flag_nhanhangbabimart_setup>
+                <setup>
+                    <module>Flag_Nhanhangbabimart</module>
+                </setup>
+            </flag_nhanhangbabimart_setup>
+        </resources>
+    </global>
+    <default>
+        <carriers>
+            <flag_nhanhangbabimart>
+                <active>1</active>
+                <model>flag_nhanhangbabimart/carrier_nhanhangbabimart</model>
+                <title>Nhận hàng tại Babimart</title>
+                <name>Nhận hàng tại Babimart</name>
+                <price>5.00</price>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </flag_nhanhangbabimart>
+        </carriers>
+    </default>
+
+</config>

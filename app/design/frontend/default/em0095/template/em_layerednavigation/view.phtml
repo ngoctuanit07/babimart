@@ -1,0 +1,214 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php
+
+/* Load category by id*/
+$cat = Mage::registry('current_category');
+if (isset($cat)) {
+    function menu_min($cate, $isChild = false)
+    {
+        $cat = $cate;
+
+        $subcats = $cat->getChildren();
+        foreach (explode(',', $subcats) as $subCatid) {
+
+            $_category = Mage::getModel('catalog/category')->load($subCatid);
+            if ($_category->getIsActive()) {
+                $caturl = $_category->getURL();
+                $cl = $_category->getUrlKey() == 'thuong-hieu' ? 'min' : '';
+                $catname = $_category->getName();
+                $class = 'menu-item-link menu-item-depth-0';
+                if ($isChild)
+                    $class = 'menu-item-hbox menu-item-depth-' . ($_category->getLevel() - 1) . ' fix-top menu-item-parent';
+
+                if ($_category->getChildren()) {
+                    $class = 'menu-item-link menu-item-depth-0  menu-item-parent';
+                }
+
+                echo '<li class="' . $class . '">';
+                echo '
+                                    <a  href="' . $caturl . '" title="' . $catname . '">' . $catname . '</a>';
+                echo $class == 'menu-item-link menu-item-depth-' . ($_category->getLevel() - 1) . '  menu-item-parent' ? '<a href="#" class="arrow"><span>&gt;</span></a>' : '';
+                if ($_category->getChildren()) {
+                    echo '<ul class="menu-container ' . $cl . '">';
+                    menu_min($_category, true);
+                    echo "</ul>";
+                }
+                echo "</li>";
+
+            }
+        }
+
+    }
+
+    $path = $cat->getUrlPath();
+    if (strpos($path, 'thuong-hieu') !== false && $cat->getUrlKey() != 'thuong-hieu') {
+        $collections = $cat->getProductCollection();
+        $cat_ids = array();
+        $temp_id = array();
+        $i = 0;
+        foreach ($collections as $product_f) {
+            if ($i == 0) {
+                $temp_id = $product_f->load()->getCategoryids();
+            } else {
+                if ($i != 1) {
+                    $temp_id = $cat_ids;
+                }
+                $cat_ids = array_unique(array_merge($temp_id, $product_f->load()->getCategoryids()));
+            }
+            $i++;
+        }
+        $cat_ids_new = count($cat_ids) ? $cat_ids : $temp_id;
+        $helper = Mage::helper('min_newatt');
+        ?>
+        <div class="block block-layered-nav" style="height: 34px;margin:0">
+            <div class="block-title">
+                <strong><span><?php echo $this->__('Danh mục') ?></span></strong>
+            </div>
+        </div>
+        <?php
+
+        $html_menu = $helper->buildCate($cat_ids_new);
+        echo '<div class="em_nav">';
+        echo '<ul class="vnav ' . $classx . '">';
+        echo $html_menu;
+        echo "<ul>";
+        echo '</div>';
+        ?>
+
+    <?php
+    }
+}
+if (isset($cat) && $cat->getChildren() && $cat->getUrlKey() != 'thuong-hieu') {
+    ?>
+
+    <div class="block block-layered-nav" style="height: 34px;margin:0">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Danh mục') ?></span></strong>
+        </div>
+    </div>
+    <?php
+    $classx = $cat->getUrlKey() == 'thuong-hieu' ? 'min' : '';
+    echo '<div class="em_nav">';
+    echo '<ul class="vnav ' . $classx . '">';
+
+    if ($cat->getChildren())
+        menu_min($cat);
+    echo "<ul>";
+    echo '</div>';
+}
+?>
+<?php if ($this->canShowBlock()) {
+
+    $validate = array(
+        'Thương hiệu',
+        'Tuổi',
+        'Giá',
+        'Màu Sắc'
+    );
+    ?>
+    <div class="block block-layered-nav">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Bộ Lọc Sản Phẩm') ?></span></strong>
+    </div>
+    <div class="block-content">
+    <?php if ($this->canShowOptions()) { ?>
+        <!--            <p class="block-subtitle">--><?php //echo $this->__('Lọc sản phẩm') ?><!--</p>-->
+        <dl id="narrow-by-list">
+            <?php $_filters = $this->getFilters() ?>
+            <?php switch (true) {
+                case Mage::registry('current_category') && Mage::registry('current_category')->getLevel() <= 2:
+                    foreach ($_filters as $_filter) {
+                        ?>
+                        <?php if ($_filter->getItemsCount() && in_array($_filter->getName(), $validate)) { ?>
+                            <dt>
+                                <?php echo $this->__($_filter->getName()) ?>
+                                <?php if ($removeUrl = Mage::helper('layerednavigation')->getRemoveUrl($_filter)) { ?>
+                                    <a class="btn-remove" href="<?php echo $removeUrl ?>"
+                                       title="<?php echo $this->__('Xóa tất cả') ?>"
+                                       rel="nofollow"><?php echo $this->__('Xóa tất cả') ?></a>
+                                <?php } ?>
+                            </dt>
+                            <dd><?php echo $_filter->getHtml() ?></dd>
+                        <?php
+                        }
+                    }
+                    break;
+                case Mage::registry('current_category') && Mage::registry('current_category')->getLevel() >= 3:
+                    $validate = array(
+                        'Danh Mục Con',
+                        'Danh mục Con',
+                        'Danh mục',
+                        'Danh Mục'
+                    );
+                    foreach ($_filters as $_filter) {
+                        ?>
+                        <?php if ($_filter->getItemsCount() && !in_array($_filter->getName(), $validate)) { ?>
+                            <dt>
+                                <?php echo $this->__($_filter->getName()) ?>
+                                <?php if ($removeUrl = Mage::helper('layerednavigation')->getRemoveUrl($_filter)) { ?>
+                                    <a class="btn-remove" href="<?php echo $removeUrl ?>"
+                                       title="<?php echo $this->__('Xóa tất cả') ?>"
+                                       rel="nofollow"><?php echo $this->__('Xóa tất cả') ?></a>
+                                <?php } ?>
+                            </dt>
+                            <dd><?php echo $_filter->getHtml() ?></dd>
+                        <?php
+                        }
+                    }
+                    break;
+            }
+            ?>
+        </dl>
+        <script type="text/javascript">decorateDataList('narrow-by-list')</script>
+        </div>
+        </div>
+    <?php
+    }
+} ?>
+<style>
+    li.level-4 {
+        width: 232px;
+        float: left;
+    }
+
+    ul.level-3 {
+        float: left;
+        margin-left: 218px;
+        background: white;
+        position: absolute;
+        margin-top: -21px;
+        display: none;
+    }
+</style>

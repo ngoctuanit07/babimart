@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Flag_Page>
+            <version>0.1.0</version>
+        </Flag_Page>
+    </modules>
+    <global>
+        <blocks>
+            <flag_page>
+                <class>Flag_Page_Block</class>
+            </flag_page>
+        </blocks>
+    </global>
+</config>

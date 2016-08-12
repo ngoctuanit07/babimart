@@ -1,0 +1,118 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '262551797263136');
+fbq('track', "PageView");</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=262551797263136&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<div class="header-container">
+    <div class="header">
+        <div>
+            <div class="logo-theme">
+                <?php if ($this->getIsHomePage()):?>
+                    <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+                <?php else:?>
+                    <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+                <?php endif?>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml() ?>
+    </div>
+</div>
+<p id="back-top"><a href="#top" title="<?php echo $this->__('Back to Top') ?>"><?php echo $this->__('Back to Top') ?></a></p>
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.wrapper_header .container_24 > div:lt(3)').wrapAll('<div class="container_24" id="tophead-fapteam"> </div>');
+        jQuery('#tophead-fapteam').wrapAll('<div class="top-header"></div>');
+        jQuery('.top-header').insertBefore('.wrapper_header');
+        jQuery( "#search_mini_form").clone().prependTo( "#tophead-fapteam" );
+        jQuery( "#emarea04 .menu-wrapper" ).clone().prependTo("#tophead-fapteam" );
+        jQuery( "#tophead-fapteam .menu-wrapper").insertAfter(".language_currency");
+        jQuery( ".header-right").insertAfter(".mobile_support");
+        jQuery("<div class='pull-left navbar-left'> <a class='home' href='/'></a></div>").insertBefore(".language_currency")
+        jQuery( "#tophead-fapteam #search_mini_form").insertAfter("#tophead-fapteam .menu-wrapper");
+       // jQuery( "<div class='box-discount'><a href=''#' target='_blank' class='promo'><span class='img-kml'></span><b class='upc-kml'>Khuyến mại</b></a><a href=''#' target='_blank' class='support-online-link'><i class='icon-supportOnine'></i><i class='icon-around-down'></i>Hỗ trợ trực tuyến</a><a href=''#' target='_blank' class='add'><i class='icon-around-down'></i><b class='upc-kml'>Thêm</b></a></div>").insertAfter(".mobile_support");
+
+        jQuery(document).scroll(function() {
+            var y = jQuery(this).scrollTop();
+            if (y > 500) {
+                jQuery('#tophead-fapteam #search_mini_form').css("display","inline-block");
+                jQuery('#tophead-fapteam .menu-wrapper').css("display","block");
+                jQuery('.mobile_support').css("display","none");
+            } else {
+                jQuery('#tophead-fapteam .menu-wrapper').css("display","none");
+                jQuery('#tophead-fapteam #search_mini_form').css("display","none");
+                jQuery('.mobile_support').css("display","block");
+            }
+        });
+jQuery(".closex").click(function () {
+  
+         jQuery('.box-sub-support').css("display","none");
+    
+    });
+
+var ttem=jQuery(window).width();
+if(ttem<500)
+{
+    jQuery(".form-language ul li.first a").text("HN");
+    jQuery(".form-language ul li.last a").text("HCM");
+    jQuery('.ColoTextPing-head.nav-item-position').not('em').text("Hỗ trợ mụch đích");
+}
+
+        // jQuery(".nav-header li.nav-sub-item:nth-child(2)").hover(function () {
+        //     jQuery(this).toggleClass("nav-ac");
+        //     var t = jQuery(this).find(".box-sub-support"), n = jQuery(this).find(".bg-tem-b");
+        //     t.toggle(), n.toggle()
+        // }), jQuery(".nav-header li.nav-sub-item:last").hover(function () {
+        //     var n = jQuery(this).find(".box-sub-support-last");
+        //     n.toggle()
+        // })
+
+
+
+    });
+</script>
+<style type="text/css">
+
+</style>
+
+

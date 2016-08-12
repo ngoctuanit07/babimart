@@ -1,0 +1,24 @@
+﻿<?php
+$_stores = $this->getActiveStores();
+?>
+<?php if(count($_stores)>1): ?>
+    <div class="form-store popup city" id="store-view" style="display:none">
+        <div class="popup_T1">
+            <?php echo $this->__('BABIMART.COM');?>
+        </div>
+        <div class="popup_Co">
+            <p class="text1"><?php echo $this->__('Hãy chọn thành phố nơi bạn sống để khám phá!');?></p>
+            <?php foreach ($_stores as $_store): ?>
+                <?php
+                $tam	=	$this->escapeHtml($_store->getName());
+                $ten	=	substr($tam,0,2);
+            ?>
+                <p><a class="city_blue" href="javascript:void(0)"  onclick="return BBLocation.setLocation('<?php echo $_store->getCode()?>')">
+                        <span  class="ic_city"></span>
+                        <?php echo $this->escapeHtml($_store->getName()) ?>
+                    </a></p>
+            <?php endforeach; ?>
+        </div>
+        <a class="btn_pop_close " onclick="BBLocation.closePopup()"></a>
+    </div>
+<?php endif; ?>

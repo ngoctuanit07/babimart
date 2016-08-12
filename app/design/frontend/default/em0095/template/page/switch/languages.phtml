@@ -1,0 +1,89 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Language switcher template
+ *
+ * @see Mage_Page_Block_Switch
+ */
+?>
+<?php
+$this->getStores();
+$stores = Mage::app()->getStores();
+if (count($stores) >= 2): ?>
+    <div class="form-language" id="language" style="float: left;margin-top: -5px;">
+        <form action="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" id="f_" method="post"
+              style="display: block">
+            <div class="choose_city">
+                <div class="city_current" style="border: 1px solid rgb(255, 255, 255);"><a href="#"><span
+                            class="ic_city"></span><span class="city_name">Hồ Chí Minh</span><span
+                            class="ic_arrD_blue"></span></a></div>
+                <div class="city_hover" style="display: none;">
+                    <input id="sw" name="switch_store" type="hidden"/>
+                    <ul class="list_city">
+                        <?php foreach ($stores as $_lang): ?>
+                            <?php
+                            if ($_lang->getIsActive()) {
+                                $tam = $this->escapeHtml($_lang->getName());
+                                $ten = substr($tam, 0, 2);
+                                ?>
+                                <?php if ($_lang->getId() == $this->getCurrentStoreId()) {
+
+                                    ?>
+                                    <input id="c_current" type="hidden" value="<?php echo $_lang->getName() ?>">
+                                <?php
+                                }  ?>
+                                <li><a class="btn_submit_store" data="<?php echo $_lang->getCode() ?>"><span
+                                            class="ic_city1"></span><?php echo $this->escapeHtml($_lang->getName()) ?>
+                                    </a></li>
+                            <?php } endforeach; ?>
+                    </ul>
+                    <script type="text/javascript">
+                        jQuery('.city_name').html(jQuery('#c_current').val());
+                        jQuery(document).ready(function () {
+//                jQuery(".language-currency .store-view-selected").text(jQuery("#id_laguage_currency_content #language ul li.selected").text());
+                            jQuery(".btn_submit_store").on('click', function () {
+                                BBLocation.setLocation(jQuery(this).attr('data'));
+                                jQuery('#f_').submit();
+                            });
+                            jQuery('.city_current').mouseover(function () {
+                                jQuery('.city_hover').css('display', 'block')
+                            });
+                            jQuery('.city_hover').mouseleave(function () {
+                                jQuery('.city_hover').css('display', 'none')
+                            });
+
+                        });
+                    </script>
+                    <script
+                        type="text/javascript">decorateGeneric($$('.form-language ul li'), ['first', 'last'])</script>
+
+                </div>
+            </div>
+        </form>
+    </div>
+<?php endif; ?>

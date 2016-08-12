@@ -1,0 +1,99 @@
+
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="footer-container">
+    <div class="footer">
+                <div class="logo-footer">
+                        <?php if ($this->getIsHomePage()):?>
+                        <h1 class="logo"><strong><?php echo Mage::getStoreConfig('design/header/logo_alt') ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo Mage::getStoreConfig('design/header/logo_alt') ?>" class="logo"><img src="<?php echo $this->getSkinUrl() ?><?php echo Mage::getStoreConfig('design/header/logo_src') ?>" width="121px" alt="<?php echo Mage::getStoreConfig('design/header/logo_alt') ?>" /></a></h1>
+                        <?php else:?>
+                        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo Mage::getStoreConfig('design/header/logo_alt') ?>" class="logo"><strong><?php echo Mage::getStoreConfig('design/header/logo_alt') ?></strong><img src="<?php echo $this->getSkinUrl() ?><?php echo Mage::getStoreConfig('design/header/logo_src') ?>" width="121px" alt="<?php echo Mage::getStoreConfig('design/header/logo_alt') ?>" /></a>
+                        <?php endif?>
+                </div>
+                <div class="last-col-footer">
+                        <?php echo $this->getChildHtml() ?>
+                </div>
+        <div>
+                        <address><?php echo $this->getCopyright() ?></address>
+                </div>
+    </div>
+</div>
+<?php
+$router = Mage::app()->getFrontController()->getRequest()->getControllerName();
+$router = $router =='index' ? 'home' : $router;
+?>
+<script lang="javascript">
+(function() {
+var _h1= document.getElementsByTagName('title')[0] || false;
+var product_name = '';
+if(_h1){
+product_name= _h1.textContent || _h1.innerText;
+}
+   var ga = document.createElement('script');
+   ga.type = 'text/javascript';
+   ga.src = '//live.vnpgroup.net/js/web_client_box.php?hash=7ce5eb6345c3587fc9f4d49e8a6e6c82&data=eyJzc29faWQiOjE4NTIxNTYsImhhc2giOiIwZGJhMzMzN2VlODg5ZDcyNTEyYjYxNjVmYjIyZmY3OCJ9&pname='+product_name;
+   var s = document.getElementsByTagName('script');
+   s[0].parentNode.insertBefore(ga, s[0]);
+})();
+</script>
+<script type="text/javascript">
+//* <![CDATA[ */
+productId = typeof productId != 'undefined' ? productId : '';
+categoryId = typeof categoryId != 'undefined' ? categoryId : '';
+var google_tag_params = {
+ecomm_prodid: productId,
+ecomm_pagetype: '<?php echo $router  ?>',
+ecomm_totalvalue: 'REPLACE_WITH_VALUE',
+dynx_itemid: productId,
+dynx_itemid2: categoryId,
+dynx_pagetype: '<?php echo $router  ?>',
+dynx_totalvalue: 'REPLACE_WITH_VALUE',
+};
+var google_conversion_id = 994227949;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+//]]>
+var cityOpen = false
+jQuery('.city_current').on('touchstart click',function(){
+        if(cityOpen){
+        jQuery('.city_hover').css('display','none');
+        cityOpen = false;
+        return;
+        }
+        //jQuery('.city_hover').css('display','block');
+        cityOpen = true;
+})
+</script>
+
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/994227949/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+

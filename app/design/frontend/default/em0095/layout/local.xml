@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/flag/location.js</name></action>
+        </reference>
+        <reference name="header">
+            <remove name="header_store" />
+            <block type="flag_page/switch" name="babi_switch_store_form" after="em_area_language-currency" template="page/switch/babi_stores_form.phtml"/>
+            <block type="flag_page/switch" name="babi_switch_store_popup" template="page/switch/babi_popup_store.phtml"/>
+        </reference>
+    </default>
+</layout>

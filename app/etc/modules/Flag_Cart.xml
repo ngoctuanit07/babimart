@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Flag_Cart>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <EM_Ajaxcart/>
+            </depends>
+        </Flag_Cart>
+    </modules>
+</config>
